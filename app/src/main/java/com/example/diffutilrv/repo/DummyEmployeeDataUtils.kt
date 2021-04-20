@@ -1,4 +1,6 @@
-package com.example.diffutilrv
+package com.example.diffutilrv.repo
+
+import com.example.diffutilrv.model.Employee
 
 object DummyEmployeeDataUtils {
     val employeeListSortedByName: List<Employee>

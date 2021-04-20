@@ -1,6 +1,7 @@
-package com.example.diffutilrv
+package com.example.diffutilrv.rvadapter
 
 import androidx.recyclerview.widget.DiffUtil
+import com.example.diffutilrv.model.Employee
 
 class EmployeeDiffCallback(
     private val oldEmployeeList: List<Employee>,

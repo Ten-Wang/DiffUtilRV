@@ -6,6 +6,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.diffutilrv.repo.DummyEmployeeDataUtils
+import com.example.diffutilrv.rvadapter.EmployeeRecyclerViewAdapter
 
 class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
