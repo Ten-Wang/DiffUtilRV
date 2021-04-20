@@ -1,6 +1,8 @@
 package com.example.diffutilrv.data
 
-class EmployeeRepository {
+import javax.inject.Inject
+
+class EmployeeRepository @Inject constructor() {
 
     fun getEmployees() = FakeEmployeeDatabase.employeeList
 }

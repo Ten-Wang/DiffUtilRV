@@ -2,8 +2,9 @@ package com.example.diffutilrv.domain
 
 import com.example.diffutilrv.data.Employee
 import com.example.diffutilrv.data.EmployeeRepository
+import javax.inject.Inject
 
-class GetEmployeesUseCase(
+class GetEmployeesUseCase @Inject constructor(
     private val employeeRepository: EmployeeRepository
 ) {
     operator fun invoke(filterStrategy: FilterStrategy): List<Employee> {
