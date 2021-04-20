@@ -8,13 +8,9 @@ import com.example.diffutilrv.model.Employee
 import com.example.diffutilrv.R
 import com.example.diffutilrv.rvadapter.viewholder.ViewHolder
 
-class EmployeeRecyclerViewAdapter(employeeList: List<Employee>) :
+class EmployeeRecyclerViewAdapter :
     RecyclerView.Adapter<ViewHolder>() {
     private val list: MutableList<Employee> = mutableListOf()
-
-    init {
-        list.addAll(employeeList)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
