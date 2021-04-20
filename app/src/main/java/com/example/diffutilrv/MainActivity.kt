@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -45,11 +44,9 @@ class MainActivity : AppCompatActivity() {
             EmployeeViewModelFactory()
         ).get(EmployeeListViewModel::class.java)
 
-        viewModel.list.observe(
-            this,
-            Observer<List<Employee>> { list ->
-                adapter.updateEmployeeListItems(list)
-            })
+        viewModel.list.observe(this, { list ->
+            adapter.updateEmployeeListItems(list)
+        })
     }
 
     private fun fetchList(listOrder: EmployeeListViewModel.ListOrder) {
