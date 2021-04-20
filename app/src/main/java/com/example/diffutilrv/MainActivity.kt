@@ -13,10 +13,6 @@ import com.example.diffutilrv.viewmodel.EmployeeListViewModel
 import com.example.diffutilrv.viewmodel.EmployeeViewModelFactory
 
 class MainActivity : AppCompatActivity() {
-    companion object {
-        private val DEFAULT_LIST_ORDER = EmployeeListOrder.SORT_BY_ROLE
-    }
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: EmployeeRecyclerViewAdapter
 
@@ -27,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initViews()
         initViewModel()
-        fetchList(DEFAULT_LIST_ORDER)
+        fetchList()
     }
 
     private fun initViews() {
@@ -48,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun fetchList(listOrder: EmployeeListOrder) {
+    private fun fetchList(listOrder: EmployeeListOrder? = null) {
         viewModel.fetch(listOrder)
     }
 
