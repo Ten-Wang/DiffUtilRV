@@ -2,7 +2,7 @@ package com.example.diffutilrv.repo
 
 import com.example.diffutilrv.model.Employee
 
-object DummyEmployeeDataUtils {
+class DummyEmployeeDataUtils {
     val employeeListSortedByName: List<Employee>
         get() {
             return createEmployeeList().apply {

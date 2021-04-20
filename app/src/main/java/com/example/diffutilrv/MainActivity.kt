@@ -7,15 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.diffutilrv.model.Employee
-import com.example.diffutilrv.repo.DummyEmployeeDataUtils
+import com.example.diffutilrv.model.EmployeeListOrder
 import com.example.diffutilrv.rvadapter.EmployeeRecyclerViewAdapter
 import com.example.diffutilrv.viewmodel.EmployeeListViewModel
 import com.example.diffutilrv.viewmodel.EmployeeViewModelFactory
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        private val DEFAULT_LIST_ORDER = EmployeeListViewModel.ListOrder.SORT_BY_ROLE
+        private val DEFAULT_LIST_ORDER = EmployeeListOrder.SORT_BY_ROLE
     }
 
     private lateinit var recyclerView: RecyclerView
@@ -49,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun fetchList(listOrder: EmployeeListViewModel.ListOrder) {
+    private fun fetchList(listOrder: EmployeeListOrder) {
         viewModel.fetch(listOrder)
     }
 
@@ -61,11 +60,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sort_by_name -> {
-                fetchList(EmployeeListViewModel.ListOrder.SORT_BY_NAME)
+                fetchList(EmployeeListOrder.SORT_BY_NAME)
                 return true
             }
             R.id.sort_by_role -> {
-                fetchList(EmployeeListViewModel.ListOrder.SORT_BY_ROLE)
+                fetchList(EmployeeListOrder.SORT_BY_ROLE)
                 return true
             }
         }
