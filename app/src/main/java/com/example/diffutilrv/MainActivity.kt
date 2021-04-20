@@ -8,7 +8,7 @@ import com.example.diffutilrv.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private val adapter = EmployeeRecyclerViewAdapter(DummyEmployeeDataUtils.getEmployeeListSortedByRole())
+    private val adapter = EmployeeRecyclerViewAdapter()
 
     private lateinit var binding: ActivityMainBinding
 
@@ -27,11 +27,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.sort_by_name -> {
-                adapter.updateEmployeeListItems(DummyEmployeeDataUtils.getEmployeeListSortedByName())
+                //TODO: sort by name
                 true
             }
             R.id.sort_by_role -> {
-                adapter.updateEmployeeListItems(DummyEmployeeDataUtils.getEmployeeListSortedByRole())
+                //TODO: sort by role
                 true
             }
             else -> super.onOptionsItemSelected(item)
