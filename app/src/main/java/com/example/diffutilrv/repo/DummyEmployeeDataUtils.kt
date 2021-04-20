@@ -6,17 +6,13 @@ object DummyEmployeeDataUtils {
     val employeeListSortedByName: List<Employee>
         get() {
             return createEmployeeList().apply {
-                sortWith(Comparator { e1, e2 ->
-                    e1.name.compareTo(e2.name)
-                })
+                this.sortBy { it.name }
             }
         }
     val employeeListSortedByRole: List<Employee>
         get() {
             return createEmployeeList().apply {
-                sortWith(Comparator { e1, e2 ->
-                    e1.role.compareTo(e2.role)
-                })
+                sortBy { it.role }
             }
         }
 
