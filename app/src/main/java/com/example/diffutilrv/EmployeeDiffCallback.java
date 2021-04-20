@@ -3,6 +3,8 @@ package com.example.diffutilrv;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 
+import com.example.diffutilrv.data.Employee;
+
 import java.util.List;
 
 public class EmployeeDiffCallback extends DiffUtil.Callback {

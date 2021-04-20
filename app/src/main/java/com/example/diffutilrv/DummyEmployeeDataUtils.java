@@ -1,10 +1,13 @@
 package com.example.diffutilrv;
 
+import com.example.diffutilrv.data.Employee;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+@Deprecated
 public class DummyEmployeeDataUtils {
     public static List<Employee> getEmployeeListSortedByName() {
         final List<Employee> employeeList = getEmployeeList();

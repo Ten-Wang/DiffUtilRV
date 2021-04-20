@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.diffutilrv.data.Employee;
+
 import java.util.ArrayList;
 import java.util.List;
 
