@@ -15,9 +15,9 @@ class MainViewModel @Inject constructor(
     private val getEmployeesUseCase: GetEmployeesUseCase
 ) : ViewModel() {
 
-    private val filterState = MutableStateFlow(FilterStrategy.ByRole)
+    private val filterAction = MutableStateFlow(FilterStrategy.ByRole)
 
-    private val _uiState = filterState.transform { strategy ->
+    private val _uiState = filterAction.transform { strategy ->
         emit(MainUiState.StateLoading)
         try {
             val employees = getEmployeesUseCase(strategy)
@@ -35,11 +35,11 @@ class MainViewModel @Inject constructor(
         get() = _uiState
 
     fun filterDataByName() {
-        filterState.value = FilterStrategy.ByName
+        filterAction.value = FilterStrategy.ByName
     }
 
     fun filterDataByRole() {
-        filterState.value = FilterStrategy.ByRole
+        filterAction.value = FilterStrategy.ByRole
     }
 }
 
