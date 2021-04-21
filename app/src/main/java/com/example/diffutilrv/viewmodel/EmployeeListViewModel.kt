@@ -9,12 +9,12 @@ import com.example.diffutilrv.model.EmployeeListOrder
 import com.example.diffutilrv.repo.EmployeeDataRepository
 import kotlinx.coroutines.launch
 
-class EmployeeListViewModel : ViewModel() {
+class EmployeeListViewModel(
+    private val repository: EmployeeDataRepository
+) : ViewModel() {
     companion object {
-        private val DEFAULT_LIST_ORDER = EmployeeListOrder.SORT_BY_ROLE
+        val DEFAULT_LIST_ORDER = EmployeeListOrder.SORT_BY_ROLE
     }
-
-    private val repository = EmployeeDataRepository()
 
     private val _list: MutableLiveData<List<Employee>> = MutableLiveData()
     val list: LiveData<List<Employee>> = _list
