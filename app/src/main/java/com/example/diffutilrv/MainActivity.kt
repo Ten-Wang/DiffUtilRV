@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diffutilrv.model.EmployeeListOrder
-import com.example.diffutilrv.repo.EmployeeDataRepositoryImpl
+import com.example.diffutilrv.repo.DummyEmployeeDataRepository
 import com.example.diffutilrv.rvadapter.EmployeeRecyclerViewAdapter
 import com.example.diffutilrv.viewmodel.EmployeeListViewModel
 import com.example.diffutilrv.viewmodel.EmployeeViewModelFactory
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     private fun initViewModel() {
         viewModel = ViewModelProvider(
             this,
-            EmployeeViewModelFactory(EmployeeDataRepositoryImpl())
+            EmployeeViewModelFactory(DummyEmployeeDataRepository())
         ).get(EmployeeListViewModel::class.java)
 
         viewModel.list.observe(this, { list ->
