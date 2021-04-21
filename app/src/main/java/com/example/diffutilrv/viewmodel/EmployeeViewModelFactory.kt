@@ -2,10 +2,13 @@ package com.example.diffutilrv.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.diffutilrv.repo.EmployeeDataRepository
 
-class EmployeeViewModelFactory : ViewModelProvider.NewInstanceFactory() {
+class EmployeeViewModelFactory(
+    private val repository: EmployeeDataRepository
+) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
-        return EmployeeListViewModel() as T
+        return EmployeeListViewModel(repository) as T
     }
 }
