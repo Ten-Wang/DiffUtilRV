@@ -1,4 +1,4 @@
-package com.example.diffutilrv
+package com.example.diffutilrv.ui
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil

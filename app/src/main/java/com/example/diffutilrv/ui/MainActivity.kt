@@ -1,10 +1,11 @@
-package com.example.diffutilrv
+package com.example.diffutilrv.ui
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.diffutilrv.R
 import com.example.diffutilrv.databinding.ActivityMainBinding
 import com.example.diffutilrv.util.observe
 import dagger.hilt.android.AndroidEntryPoint

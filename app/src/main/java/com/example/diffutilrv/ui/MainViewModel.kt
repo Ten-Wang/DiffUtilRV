@@ -1,4 +1,4 @@
-package com.example.diffutilrv
+package com.example.diffutilrv.ui
 
 import androidx.lifecycle.ViewModel
 import com.example.diffutilrv.data.Employee

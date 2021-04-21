@@ -1,9 +1,10 @@
-package com.example.diffutilrv
+package com.example.diffutilrv.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.diffutilrv.R
 import com.example.diffutilrv.data.Employee
 import com.example.diffutilrv.databinding.ItemEmployeeBinding
 
