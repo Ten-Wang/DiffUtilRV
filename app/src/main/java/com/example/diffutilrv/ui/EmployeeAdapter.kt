@@ -10,8 +10,8 @@ import com.example.diffutilrv.R
 import com.example.diffutilrv.databinding.ItemEmployeeBinding
 import com.example.diffutilrv.model.Employee
 
-class EmployeeRecyclerViewAdapter :
-    ListAdapter<Employee, EmployeeRecyclerViewAdapter.EmployeeViewHolder>(EmployeeDiffItemCallback()) {
+class EmployeeAdapter :
+    ListAdapter<Employee, EmployeeAdapter.EmployeeViewHolder>(EmployeeDiffItemCallback()) {
 
     private var itemList: List<Employee> = emptyList()
 
@@ -23,6 +23,10 @@ class EmployeeRecyclerViewAdapter :
         holder.bind(itemList[position])
     }
 
+    override fun onViewRecycled(holder: EmployeeViewHolder) {
+        holder.unbind()
+    }
+
     override fun submitList(list: List<Employee>?) {
         super.submitList(list)
         itemList = list ?: emptyList()
@@ -30,15 +34,18 @@ class EmployeeRecyclerViewAdapter :
 
     override fun getItemCount(): Int = itemList.count()
 
-    class EmployeeViewHolder(
-        itemView: View
-    ) : RecyclerView.ViewHolder(itemView) {
+    class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val binding = ItemEmployeeBinding.bind(itemView)
 
         fun bind(employee: Employee) {
             binding.employeeName.text = employee.name
             binding.employeeRole.text = employee.role
+        }
+
+        fun unbind() {
+            binding.employeeName.text = null
+            binding.employeeRole.text = null
         }
 
         companion object {
@@ -50,7 +57,6 @@ class EmployeeRecyclerViewAdapter :
             }
         }
     }
-
 
     class EmployeeDiffItemCallback : DiffUtil.ItemCallback<Employee>() {
         override fun areItemsTheSame(oldItem: Employee, newItem: Employee): Boolean {

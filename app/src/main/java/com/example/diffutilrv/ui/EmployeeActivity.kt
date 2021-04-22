@@ -18,7 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class EmployeeActivity : AppCompatActivity() {
 
     private val viewModel by viewModel<EmployeeViewModel>()
-    private val adapter = EmployeeRecyclerViewAdapter()
+    private val adapter = EmployeeAdapter()
 
     private lateinit var binding: ActivityEmployeeBinding
 

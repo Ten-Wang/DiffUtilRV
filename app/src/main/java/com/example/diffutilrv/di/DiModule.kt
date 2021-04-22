@@ -6,6 +6,7 @@ import com.example.diffutilrv.repository.EmployeeRepository
 import com.example.diffutilrv.usecase.GetEmployeeListUseCase
 import com.example.diffutilrv.viewmodel.EmployeeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
 class DiModule {
@@ -26,10 +27,16 @@ class DiModule {
         viewModel { EmployeeViewModel(getEmployeeListUseCase = get()) }
     }
 
-    val diModuleList = listOf(
-        networkModule,
-        repositoryModule,
-        useCaseModule,
-        viewModelModule
-    )
+    fun init() {
+        startKoin {
+            modules(
+                listOf(
+                    networkModule,
+                    repositoryModule,
+                    useCaseModule,
+                    viewModelModule
+                )
+            )
+        }
+    }
 }

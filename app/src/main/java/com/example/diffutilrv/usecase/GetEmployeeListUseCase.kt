@@ -6,9 +6,7 @@ import com.example.diffutilrv.repository.EmployeeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class GetEmployeeListUseCase(
-    private val employeeRepository: EmployeeRepository
-) {
+class GetEmployeeListUseCase(private val employeeRepository: EmployeeRepository) {
 
     operator fun invoke(filterType: FilterType): Flow<List<Employee>> {
         return employeeRepository.getEmployeeList()

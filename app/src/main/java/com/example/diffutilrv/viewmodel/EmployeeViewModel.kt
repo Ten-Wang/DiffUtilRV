@@ -14,9 +14,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-class EmployeeViewModel(
-    private val getEmployeeListUseCase: GetEmployeeListUseCase
-) : ViewModel() {
+class EmployeeViewModel(private val getEmployeeListUseCase: GetEmployeeListUseCase) : ViewModel() {
 
     val employeeList: StatefulLiveData<List<Employee>>
         get() = _employeeList
