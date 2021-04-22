@@ -1,4 +1,4 @@
-package com.example.diffutilrv
+package com.example.diffutilrv.employee.data
 
 object DummyEmployeeDataUtils {
 
