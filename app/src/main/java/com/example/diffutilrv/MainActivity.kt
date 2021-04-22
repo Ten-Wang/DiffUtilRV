@@ -3,26 +3,29 @@ package com.example.diffutilrv
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.diffutilrv.DummyEmployeeDataUtils.employeeListSortedByName
-import com.example.diffutilrv.DummyEmployeeDataUtils.employeeListSortedByRole
+import com.example.diffutilrv.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mRecyclerViewAdapter: EmployeeRecyclerViewAdapter
+    private val viewModel by viewModels<EmployeeViewModel>()
+    private val adapter = EmployeeRecyclerViewAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        mRecyclerViewAdapter = EmployeeRecyclerViewAdapter(
-            employeeListSortedByRole
-        )
-        mRecyclerView = findViewById(R.id.recycler_view)
-        mRecyclerView.layoutManager = LinearLayoutManager(this)
-        mRecyclerView.adapter = mRecyclerViewAdapter
+
+        ActivityMainBinding.inflate(layoutInflater).also {
+            it.recyclerView.adapter = adapter
+        }.let {
+            setContentView(it.root)
+        }
+
+        viewModel.list.observe(this) {
+            adapter.updateEmployeeListItems(it)
+        }
+
+        viewModel.sortByName()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -33,15 +36,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sort_by_name -> {
-                mRecyclerViewAdapter.updateEmployeeListItems(
-                    employeeListSortedByName
-                )
+                viewModel.sortByName()
                 return true
             }
             R.id.sort_by_role -> {
-                mRecyclerViewAdapter.updateEmployeeListItems(
-                    employeeListSortedByRole
-                )
+                viewModel.sortByRole()
                 return true
             }
         }

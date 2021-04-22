@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
-class EmployeeRecyclerViewAdapter(
-    employeeList: List<Employee>
-) : RecyclerView.Adapter<EmployeeRecyclerViewAdapter.ViewHolder>() {
+class EmployeeRecyclerViewAdapter : RecyclerView.Adapter<EmployeeRecyclerViewAdapter.ViewHolder>() {
 
     private val mEmployees: MutableList<Employee> = ArrayList()
 
@@ -41,9 +39,5 @@ class EmployeeRecyclerViewAdapter(
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val role: TextView = itemView.findViewById<View>(R.id.employee_role) as TextView
         val name: TextView = itemView.findViewById<View>(R.id.employee_name) as TextView
-    }
-
-    init {
-        mEmployees.addAll(employeeList)
     }
 }
