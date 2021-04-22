@@ -9,15 +9,18 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.Assert
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
+import java.lang.AssertionError
 
+@ExperimentalCoroutinesApi
 class EmployeeListViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule() // bcz of viewModelScope
 
-    @ExperimentalCoroutinesApi
     @get:Rule
     var coroutinesTestRule = CoroutinesTestRule() // bcz of Coroutines
 
@@ -34,7 +37,10 @@ class EmployeeListViewModelTest {
         coVerify(exactly = 1) {
             repository.fetchEmployeeList(defaultOrder)
         }
-        Assert.assertSame(fakeList, viewModel.list.value)
+        val result = viewModel.result.value
+            ?: throw AssertionError("result should not be null")
+        assertTrue(result.isSuccess)
+        assertSame(fakeList, result.getOrNull())
     }
 
     @Test
@@ -51,8 +57,60 @@ class EmployeeListViewModelTest {
         coVerify(exactly = 1) {
             repository.fetchEmployeeList(nonDefaultOrder)
         }
-        Assert.assertSame(fakeList, viewModel.list.value)
+        val result = viewModel.result.value
+            ?: throw AssertionError("result should not be null")
+        assertTrue(result.isSuccess)
+        assertSame(fakeList, result.getOrNull())
     }
 
+    @Test
+    fun `when fetch() got an exception expect result failure`() {
+        val fakeException = createFakeException()
+        val repository = mockk<EmployeeDataRepository>(relaxed = true)
+        coEvery { repository.fetchEmployeeList(any()) } throws fakeException
+
+        val viewModel = EmployeeListViewModel(repository)
+        viewModel.fetch()
+
+        coVerify(exactly = 1) {
+            repository.fetchEmployeeList(any())
+        }
+        val result = viewModel.result.value
+            ?: throw AssertionError("result should not be null")
+        assertTrue(result.isFailure)
+        assertSame(fakeException, result.exceptionOrNull())
+    }
+
+    @Test
+    fun `expect the state of isFetching and result are both corresponds to fetch()`() =
+        coroutinesTestRule.testDispatcher.runBlockingTest {
+            val fakeList = createFakeList()
+            val repository = mockk<EmployeeDataRepository>(relaxed = true)
+            coEvery { repository.fetchEmployeeList(any()) } coAnswers {
+                delay(1)
+                fakeList
+            }
+
+            val viewModel = EmployeeListViewModel(repository)
+
+            // before
+            assertFalse(viewModel.isFetching.value!!)
+            assertNull(viewModel.result.value)
+
+            viewModel.fetch()
+
+            // fetching
+            coroutinesTestRule.testDispatcher.pauseDispatcher()
+            assertTrue(viewModel.isFetching.value!!)
+            assertNull(viewModel.result.value)
+
+            // after
+            coroutinesTestRule.testDispatcher.resumeDispatcher()
+            assertFalse(viewModel.isFetching.value!!)
+            assertNotNull(viewModel.result.value)
+        }
+
     private fun createFakeList() = listOf(Employee(1, "fake", "fake"))
+
+    private fun createFakeException() = RuntimeException("fake")
 }
