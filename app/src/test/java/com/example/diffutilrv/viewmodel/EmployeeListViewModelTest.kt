@@ -82,7 +82,7 @@ class EmployeeListViewModelTest {
     }
 
     @Test
-    fun `expect the state of isFetching and result are both corresponds to fetch()`() =
+    fun `expect the state of isFetching and result both correspond to fetch()`() =
         coroutinesTestRule.testDispatcher.runBlockingTest {
             val fakeList = createFakeList()
             val repository = mockk<EmployeeDataRepository>(relaxed = true)
