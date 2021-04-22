@@ -1,63 +1,49 @@
-package com.example.diffutilrv;
+package com.example.diffutilrv
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import java.util.*
 
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
+class EmployeeRecyclerViewAdapter(
+    employeeList: List<Employee>
+) : RecyclerView.Adapter<EmployeeRecyclerViewAdapter.ViewHolder>() {
 
-import java.util.ArrayList;
-import java.util.List;
+    private val mEmployees: MutableList<Employee> = ArrayList()
 
-public class EmployeeRecyclerViewAdapter extends
-                                         RecyclerView.Adapter<EmployeeRecyclerViewAdapter
-                                                 .ViewHolder> {
-
-    private List<Employee> mEmployees = new ArrayList<>();
-
-    public EmployeeRecyclerViewAdapter(List<Employee> employeeList) {
-        this.mEmployees.addAll(employeeList);
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val view = inflater.inflate(R.layout.list_item, parent, false)
+        return ViewHolder(view)
     }
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View view = inflater.inflate(R.layout.list_item, parent, false);
-        return new ViewHolder(view);
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val employee = mEmployees[position]
+        holder.name.text = employee.name
+        holder.role.text = employee.role
     }
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        final Employee employee = mEmployees.get(position);
-        holder.name.setText(employee.getName());
-        holder.role.setText(employee.getRole());
+    fun updateEmployeeListItems(employees: List<Employee>) {
+        val diffCallback = EmployeeDiffCallback(mEmployees, employees)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        mEmployees.clear()
+        mEmployees.addAll(employees)
+        diffResult.dispatchUpdatesTo(this)
     }
 
-    public void updateEmployeeListItems(List<Employee> employees) {
-        final EmployeeDiffCallback diffCallback = new EmployeeDiffCallback(this.mEmployees, employees);
-        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
-
-        this.mEmployees.clear();
-        this.mEmployees.addAll(employees);
-        diffResult.dispatchUpdatesTo(this);
+    override fun getItemCount(): Int {
+        return mEmployees.size
     }
 
-    @Override
-    public int getItemCount() {
-        return mEmployees.size();
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val role: TextView = itemView.findViewById<View>(R.id.employee_role) as TextView
+        val name: TextView = itemView.findViewById<View>(R.id.employee_name) as TextView
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        private final TextView role;
-        private final TextView name;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            name = (TextView) itemView.findViewById(R.id.employee_name);
-            role = (TextView) itemView.findViewById(R.id.employee_role);
-        }
+    init {
+        mEmployees.addAll(employeeList)
     }
 }

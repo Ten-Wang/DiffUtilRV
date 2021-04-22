@@ -1,48 +1,32 @@
-package com.example.diffutilrv;
+package com.example.diffutilrv
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.DiffUtil
 
-import java.util.List;
+class EmployeeDiffCallback(
+    private val mOldEmployeeList: List<Employee>,
+    private val mNewEmployeeList: List<Employee>
+) : DiffUtil.Callback() {
 
-public class EmployeeDiffCallback extends DiffUtil.Callback {
-
-    private final List<Employee> mOldEmployeeList;
-    private final List<Employee> mNewEmployeeList;
-
-    public EmployeeDiffCallback(List<Employee> oldEmployeeList, List<Employee> newEmployeeList) {
-        this.mOldEmployeeList = oldEmployeeList;
-        this.mNewEmployeeList = newEmployeeList;
+    override fun getOldListSize(): Int {
+        return mOldEmployeeList.size
     }
 
-    @Override
-    public int getOldListSize() {
-        return mOldEmployeeList.size();
+    override fun getNewListSize(): Int {
+        return mNewEmployeeList.size
     }
 
-    @Override
-    public int getNewListSize() {
-        return mNewEmployeeList.size();
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return mOldEmployeeList[oldItemPosition].id == mNewEmployeeList[newItemPosition].id
     }
 
-    @Override
-    public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return mOldEmployeeList.get(oldItemPosition).getId() == mNewEmployeeList.get(
-                newItemPosition).getId();
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldEmployee = mOldEmployeeList[oldItemPosition]
+        val newEmployee = mNewEmployeeList[newItemPosition]
+        return oldEmployee.name == newEmployee.name
     }
 
-    @Override
-    public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-        final Employee oldEmployee = mOldEmployeeList.get(oldItemPosition);
-        final Employee newEmployee = mNewEmployeeList.get(newItemPosition);
-
-        return oldEmployee.getName().equals(newEmployee.getName());
-    }
-
-    @Nullable
-    @Override
-    public Object getChangePayload(int oldItemPosition, int newItemPosition) {
+    override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
         // Implement method if you're going to use ItemAnimator
-        return super.getChangePayload(oldItemPosition, newItemPosition);
+        return super.getChangePayload(oldItemPosition, newItemPosition)
     }
 }

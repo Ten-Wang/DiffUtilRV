@@ -1,49 +1,23 @@
-package com.example.diffutilrv;
+package com.example.diffutilrv
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+object DummyEmployeeDataUtils {
 
-public class DummyEmployeeDataUtils {
-    public static List<Employee> getEmployeeListSortedByName() {
-        final List<Employee> employeeList = getEmployeeList();
+    val employeeListSortedByName: List<Employee>
+        get() = employeeList.sortedBy { it.name }
 
-        Collections.sort(employeeList, new Comparator<Employee>() {
-            @Override
-            public int compare(Employee a1, Employee a2) {
-                return a1.getName().compareTo(a2.getName());
-            }
-        });
+    val employeeListSortedByRole: List<Employee>
+        get() = employeeList.sortedBy { it.role }
 
-        return employeeList;
-    }
-
-    public static List<Employee> getEmployeeListSortedByRole() {
-        final List<Employee> employeeList = getEmployeeList();
-
-        Collections.sort(employeeList, new Comparator<Employee>() {
-            @Override
-            public int compare(Employee a1, Employee a2) {
-                return a2.getRole().compareTo(a1.getRole());
-            }
-        });
-        return employeeList;
-    }
-
-    private static List<Employee> getEmployeeList() {
-        final List<Employee> employees = new ArrayList<>();
-
-        employees.add(new Employee(1, "Employee 1", "Developer"));
-        employees.add(new Employee(2, "Employee 2", "Tester"));
-        employees.add(new Employee(3, "Employee 3", "Support"));
-        employees.add(new Employee(4, "Employee 4", "Sales Manager"));
-        employees.add(new Employee(5, "Employee 5", "Manager"));
-        employees.add(new Employee(6, "Employee 6", "Team lead"));
-        employees.add(new Employee(7, "Employee 7", "Scrum Master"));
-        employees.add(new Employee(8, "Employee 8", "Sr. Tester"));
-        employees.add(new Employee(9, "Employee 9", "Sr. Developer"));
-        return employees;
-    }
-
+    private val employeeList: List<Employee>
+        get() = listOf(
+            Employee(1, "Employee 1", "Developer"),
+            Employee(2, "Employee 2", "Tester"),
+            Employee(3, "Employee 3", "Support"),
+            Employee(4, "Employee 4", "Sales Manager"),
+            Employee(5, "Employee 5", "Manager"),
+            Employee(6, "Employee 6", "Team lead"),
+            Employee(7, "Employee 7", "Scrum Master"),
+            Employee(8, "Employee 8", "Sr. Tester"),
+            Employee(9, "Employee 9", "Sr. Developer")
+        )
 }

@@ -1,49 +1,50 @@
-package com.example.diffutilrv;
+package com.example.diffutilrv
 
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.diffutilrv.DummyEmployeeDataUtils.employeeListSortedByName
+import com.example.diffutilrv.DummyEmployeeDataUtils.employeeListSortedByRole
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+class MainActivity : AppCompatActivity() {
 
-public class MainActivity extends AppCompatActivity {
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mRecyclerViewAdapter: EmployeeRecyclerViewAdapter
 
-    private RecyclerView mRecyclerView;
-    private EmployeeRecyclerViewAdapter mRecyclerViewAdapter;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        mRecyclerViewAdapter = new EmployeeRecyclerViewAdapter(
-                DummyEmployeeDataUtils.getEmployeeListSortedByRole());
-        mRecyclerView = findViewById(R.id.recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mRecyclerViewAdapter);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        mRecyclerViewAdapter = EmployeeRecyclerViewAdapter(
+            employeeListSortedByRole
+        )
+        mRecyclerView = findViewById(R.id.recycler_view)
+        mRecyclerView.layoutManager = LinearLayoutManager(this)
+        mRecyclerView.adapter = mRecyclerViewAdapter
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.sort_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.sort_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.sort_by_name:
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.sort_by_name -> {
                 mRecyclerViewAdapter.updateEmployeeListItems(
-                        DummyEmployeeDataUtils.getEmployeeListSortedByName());
-                return true;
-            case R.id.sort_by_role:
+                    employeeListSortedByName
+                )
+                return true
+            }
+            R.id.sort_by_role -> {
                 mRecyclerViewAdapter.updateEmployeeListItems(
-                        DummyEmployeeDataUtils.getEmployeeListSortedByRole());
-                return true;
+                    employeeListSortedByRole
+                )
+                return true
+            }
         }
-
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 }
