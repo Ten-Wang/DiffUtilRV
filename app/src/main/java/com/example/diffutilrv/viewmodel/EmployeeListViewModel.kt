@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.diffutilrv.model.Employee
 import com.example.diffutilrv.model.EmployeeListOrder
 import com.example.diffutilrv.repo.EmployeeDataRepository
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 class EmployeeListViewModel(
@@ -16,12 +18,26 @@ class EmployeeListViewModel(
         val DEFAULT_LIST_ORDER = EmployeeListOrder.SORT_BY_ROLE
     }
 
-    private val _list: MutableLiveData<List<Employee>> = MutableLiveData()
-    val list: LiveData<List<Employee>> = _list
+    private val _result: MutableLiveData<Result<List<Employee>>> = MutableLiveData()
+    val result: LiveData<Result<List<Employee>>> = _result
+
+    private val _isFetching: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isFetching: LiveData<Boolean> = _isFetching
+
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        _isFetching.value = false
+        if (viewModelScope.isActive) {
+            _result.value = Result.failure(throwable)
+        }
+    }
 
     fun fetch(listOrder: EmployeeListOrder? = DEFAULT_LIST_ORDER) {
-        viewModelScope.launch {
-            _list.value = repository.fetchEmployeeList(listOrder ?: DEFAULT_LIST_ORDER)
+        _isFetching.value = true
+        viewModelScope.launch(exceptionHandler) {
+            _result.value = Result.success(
+                repository.fetchEmployeeList(listOrder ?: DEFAULT_LIST_ORDER)
+            )
+            _isFetching.value = false
         }
     }
 }
