@@ -41,7 +41,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         adapter = EmployeeRecyclerViewAdapter(
-            workerThreadExecutor = Dispatchers.IO.asExecutor()
+            workerThreadExecutor = Dispatchers.IO.asExecutor(),
+            clickListener = ::onEmployeeClicked
         )
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
@@ -80,6 +81,10 @@ class MainActivity : AppCompatActivity() {
         } else {
             progressBar.hide()
         }
+    }
+
+    private fun onEmployeeClicked(employee: Employee, position: Int) {
+        Toast.makeText(this, "Click: $employee at position[$position]", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
