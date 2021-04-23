@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diffutilrv.model.Employee
 import com.example.diffutilrv.model.EmployeeListOrder
-import com.example.diffutilrv.repo.DummyEmployeeDataRepository
+import com.example.diffutilrv.model.repo.DummyEmployeeDataRepository
 import com.example.diffutilrv.rvadapter.EmployeeRecyclerViewAdapter
 import com.example.diffutilrv.viewmodel.EmployeeListViewModel
 import com.example.diffutilrv.viewmodel.EmployeeViewModelFactory

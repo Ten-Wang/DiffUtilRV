@@ -3,7 +3,7 @@ package com.example.diffutilrv.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.diffutilrv.model.Employee
 import com.example.diffutilrv.model.EmployeeListOrder
-import com.example.diffutilrv.repo.EmployeeDataRepository
+import com.example.diffutilrv.model.repo.EmployeeDataRepository
 import com.example.diffutilrv.utils.CoroutinesTestRule
 import io.mockk.coEvery
 import io.mockk.coVerify

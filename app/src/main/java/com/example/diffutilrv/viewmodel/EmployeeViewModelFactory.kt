@@ -2,7 +2,7 @@ package com.example.diffutilrv.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.diffutilrv.repo.EmployeeDataRepository
+import com.example.diffutilrv.model.repo.EmployeeDataRepository
 
 class EmployeeViewModelFactory(
     private val repository: EmployeeDataRepository

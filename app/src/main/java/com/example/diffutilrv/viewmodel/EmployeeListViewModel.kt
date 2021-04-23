@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.diffutilrv.model.Employee
 import com.example.diffutilrv.model.EmployeeListOrder
-import com.example.diffutilrv.repo.EmployeeDataRepository
+import com.example.diffutilrv.model.repo.EmployeeDataRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch

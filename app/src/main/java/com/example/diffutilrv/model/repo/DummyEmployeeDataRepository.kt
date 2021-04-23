@@ -1,4 +1,4 @@
-package com.example.diffutilrv.repo
+package com.example.diffutilrv.model.repo
 
 import com.example.diffutilrv.model.Employee
 import com.example.diffutilrv.model.EmployeeListOrder
