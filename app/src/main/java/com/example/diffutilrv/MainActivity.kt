@@ -13,6 +13,7 @@ import com.example.diffutilrv.model.Employee
 import com.example.diffutilrv.model.EmployeeListOrder
 import com.example.diffutilrv.model.repo.DummyEmployeeDataRepository
 import com.example.diffutilrv.rvadapter.EmployeeRecyclerViewAdapter
+import com.example.diffutilrv.uimodel.EmployeeCheckbox
 import com.example.diffutilrv.viewmodel.EmployeeListViewModel
 import com.example.diffutilrv.viewmodel.EmployeeViewModelFactory
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     private fun initRecyclerView() {
         adapter = EmployeeRecyclerViewAdapter(
             workerThreadExecutor = Dispatchers.IO.asExecutor(),
-            clickListener = ::onEmployeeClicked
+            onCheckedChangeListener = ::onEmployeeSelected
         )
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             EmployeeViewModelFactory(DummyEmployeeDataRepository())
         ).get(EmployeeListViewModel::class.java)
 
-        viewModel.result.observe(this, { result ->
+        viewModel.list.observe(this, { result ->
             result.onSuccess(adapter::submitList)
             result.onFailure(::onFetchError)
         })
@@ -83,8 +84,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun onEmployeeClicked(employee: Employee, position: Int) {
-        Toast.makeText(this, "Click: $employee at position[$position]", Toast.LENGTH_SHORT).show()
+    private fun onEmployeeSelected(
+        employee: EmployeeCheckbox,
+        @Suppress("UNUSED_PARAMETER") position: Int,
+        isSelected: Boolean
+    ) {
+        viewModel.updateEmployeeSelected(employee.id, isSelected)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

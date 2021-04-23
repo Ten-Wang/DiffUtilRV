@@ -13,10 +13,12 @@ class DummyEmployeeDataRepository(
 ) : EmployeeDataRepository {
 
     private val list by lazy { createEmployeeList() }
+    private val selectedIdSet by lazy { createSelectedIdSet() }
 
     override suspend fun fetchEmployeeList(listOrder: EmployeeListOrder): List<Employee> =
         withContext(workerDispatcher) {
             //delay(500) // fake network latency; cooperative cancellation
+            //throw RuntimeException("fake exception from fetch list")
             listOrder.sort(list)
         }
 
@@ -57,5 +59,26 @@ class DummyEmployeeDataRepository(
             val cost = (base * factor).roundToInt() / 1000
             Employee(it, "Employee ${String.format("%03d", it + 1)}", role, cost)
         }
+    }
+
+    override suspend fun fetchSelectedEmployeeIdSet(): Set<Int> =
+        withContext(workerDispatcher) {
+            //delay(500) // fake latency
+            //throw RuntimeException("fake exception from fetch id set")
+            selectedIdSet
+        }
+
+    override suspend fun updateSelectedEmployee(id: Int, isSelected: Boolean): Boolean =
+        withContext(workerDispatcher) {
+            if (isSelected) {
+                selectedIdSet.add(id)
+            } else {
+                selectedIdSet.remove(id)
+            }
+            true
+        }
+
+    private fun createSelectedIdSet(): MutableSet<Int> {
+        return mutableSetOf(0, 1, 2)
     }
 }
