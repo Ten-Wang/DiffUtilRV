@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         setupObservers()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_sort, menu)
         return super.onCreateOptionsMenu(menu)
     }
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             is MainUiState.StateEmpty -> Unit
             is MainUiState.StateError -> Unit
             is MainUiState.StateLoaded -> {
-                adapter.setData(uiState.employees)
+                adapter.submitList(uiState.employees)
             }
         }
     }
