@@ -17,8 +17,7 @@ class DummyEmployeeDataRepository(
     override suspend fun fetchEmployeeList(listOrder: EmployeeListOrder): List<Employee> =
         withContext(workerDispatcher) {
             //delay(500) // fake network latency; cooperative cancellation
-            list.toMutableList() // different instance so ListAdapter can do its work
-                .apply { sortWith(listOrder.comparator) }
+            listOrder.sort(list)
         }
 
     private fun createEmployeeList(): MutableList<Employee> {
