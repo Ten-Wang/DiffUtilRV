@@ -9,11 +9,14 @@ import androidx.core.widget.ContentLoadingProgressBar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.diffutilrv.model.Employee
 import com.example.diffutilrv.model.EmployeeListOrder
 import com.example.diffutilrv.repo.DummyEmployeeDataRepository
 import com.example.diffutilrv.rvadapter.EmployeeRecyclerViewAdapter
 import com.example.diffutilrv.viewmodel.EmployeeListViewModel
 import com.example.diffutilrv.viewmodel.EmployeeViewModelFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asExecutor
 
 class MainActivity : AppCompatActivity() {
     private lateinit var progressBar: ContentLoadingProgressBar
@@ -37,7 +40,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        adapter = EmployeeRecyclerViewAdapter()
+        adapter = EmployeeRecyclerViewAdapter(
+            workerThreadExecutor = Dispatchers.IO.asExecutor()
+        )
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
     }
@@ -49,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         ).get(EmployeeListViewModel::class.java)
 
         viewModel.result.observe(this, { result ->
-            result.onSuccess(adapter::updateEmployeeListItems)
+            result.onSuccess(adapter::submitList)
             result.onFailure(::onFetchError)
         })
 
