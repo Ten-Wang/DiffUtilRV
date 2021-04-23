@@ -102,6 +102,10 @@ class MainActivity : AppCompatActivity() {
                 fetchList(EmployeeListOrder.SORT_BY_ROLE)
                 return true
             }
+            R.id.sort_by_cost -> {
+                fetchList(EmployeeListOrder.SORT_BY_COST)
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }

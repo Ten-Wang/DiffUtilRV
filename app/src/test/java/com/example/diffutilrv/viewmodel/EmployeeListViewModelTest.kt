@@ -110,7 +110,7 @@ class EmployeeListViewModelTest {
             assertNotNull(viewModel.result.value)
         }
 
-    private fun createFakeList() = listOf(Employee(1, "fake", "fake"))
+    private fun createFakeList() = listOf(Employee(1, "fake", "fake", 0))
 
     private fun createFakeException() = RuntimeException("fake")
 }

@@ -22,6 +22,7 @@ class ViewHolder(
 
     private val role: TextView = itemView.findViewById(R.id.employee_role)
     private val name: TextView = itemView.findViewById(R.id.employee_name)
+    private val cost: TextView = itemView.findViewById(R.id.employee_cost)
 
     init {
         itemView.setOnClickListener { clickListener(adapterPosition) }
@@ -30,5 +31,6 @@ class ViewHolder(
     fun bind(employee: Employee) {
         name.text = employee.name
         role.text = employee.role
+        cost.text = employee.cost.toString()
     }
 }
