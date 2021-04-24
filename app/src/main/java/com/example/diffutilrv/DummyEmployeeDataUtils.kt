@@ -1,6 +1,10 @@
 package com.example.diffutilrv
 
-object DummyEmployeeDataUtils {
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class DummyEmployeeDataUtils @Inject constructor() {
     private val employeeList: List<Employee> = listOf(
         Employee(1, "Employee 1", "Developer"),
         Employee(2, "Employee 2", "Tester"),

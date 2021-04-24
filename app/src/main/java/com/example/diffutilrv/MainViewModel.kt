@@ -4,11 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 private const val STATE_SORT_BY = "sortBy"
 
-class MainViewModel(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val state: SavedStateHandle,
+    private val dataUtils: DummyEmployeeDataUtils,
 ) : ViewModel() {
     private val _employees = MutableLiveData<List<Employee>>(emptyList())
     val employees: LiveData<List<Employee>> = _employees
@@ -19,8 +23,8 @@ class MainViewModel(
 
     fun loadData(sortBy: EmployeeSortBy? = null) {
         _employees.value = when (sortBy ?: state[STATE_SORT_BY] ?: EmployeeSortBy.ROLE) {
-            EmployeeSortBy.ROLE -> DummyEmployeeDataUtils.getEmployeeListSortedByRole()
-            EmployeeSortBy.NAME -> DummyEmployeeDataUtils.getEmployeeListSortedByName()
+            EmployeeSortBy.ROLE -> dataUtils.getEmployeeListSortedByRole()
+            EmployeeSortBy.NAME -> dataUtils.getEmployeeListSortedByName()
         }
     }
 
