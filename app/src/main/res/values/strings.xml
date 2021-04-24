@@ -2,4 +2,7 @@
     <string name="app_name">DiffUtilRV</string>
     <string name="sort_by_name">Sort by name</string>
     <string name="sort_by_role">Sort by role</string>
+    <string name="item_button">Click me</string>
+    <string name="row_clicked_message">%s row clicked</string>
+    <string name="row_button_clicked_message">%s row button clicked</string>
 </resources>
