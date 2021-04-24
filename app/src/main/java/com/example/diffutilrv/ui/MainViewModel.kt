@@ -1,10 +1,12 @@
-package com.example.diffutilrv
+package com.example.diffutilrv.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.example.diffutilrv.OneOffEvent
+import com.example.diffutilrv.data.Employee
+import com.example.diffutilrv.data.EmployeeSortBy
+import com.example.diffutilrv.domain.GetEmployeeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val STATE_SORT_BY = "sortBy"
@@ -12,7 +14,7 @@ private const val STATE_SORT_BY = "sortBy"
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val state: SavedStateHandle,
-    private val dataUtils: DummyEmployeeDataUtils,
+    private val getEmployeeUseCase: GetEmployeeUseCase,
 ) : ViewModel() {
     private val _employees = MutableLiveData<List<Employee>>(emptyList())
     val employees: LiveData<List<Employee>> = _employees
@@ -22,9 +24,8 @@ class MainViewModel @Inject constructor(
     val clickRowButtonAction: LiveData<OneOffEvent<Employee>> = _clickRowButtonAction
 
     fun loadData(sortBy: EmployeeSortBy? = null) {
-        _employees.value = when (sortBy ?: state[STATE_SORT_BY] ?: EmployeeSortBy.ROLE) {
-            EmployeeSortBy.ROLE -> dataUtils.getEmployeeListSortedByRole()
-            EmployeeSortBy.NAME -> dataUtils.getEmployeeListSortedByName()
+        viewModelScope.launch {
+            _employees.value = getEmployeeUseCase(sortBy ?: state[STATE_SORT_BY] ?: EmployeeSortBy.ROLE)
         }
     }
 

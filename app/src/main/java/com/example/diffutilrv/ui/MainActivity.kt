@@ -1,4 +1,4 @@
-package com.example.diffutilrv
+package com.example.diffutilrv.ui
 
 import android.os.Bundle
 import android.view.Menu
@@ -7,6 +7,8 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.diffutilrv.R
+import com.example.diffutilrv.data.EmployeeSortBy
 import com.example.diffutilrv.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

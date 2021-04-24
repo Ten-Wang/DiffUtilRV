@@ -1,4 +1,4 @@
-package com.example.diffutilrv
+package com.example.diffutilrv.data
 
 import javax.inject.Inject
 import javax.inject.Singleton

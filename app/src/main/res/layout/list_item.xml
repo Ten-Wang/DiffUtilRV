@@ -6,11 +6,11 @@
 
         <variable
             name="viewModel"
-            type="com.example.diffutilrv.MainViewModel" />
+            type="com.example.diffutilrv.ui.MainViewModel" />
 
         <variable
             name="employee"
-            type="com.example.diffutilrv.Employee" />
+            type="com.example.diffutilrv.data.Employee" />
 
     </data>
 

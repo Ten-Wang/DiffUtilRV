@@ -1,4 +1,4 @@
-package com.example.diffutilrv
+package com.example.diffutilrv.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
