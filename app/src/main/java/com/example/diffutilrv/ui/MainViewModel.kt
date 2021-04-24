@@ -9,7 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val STATE_SORT_BY = "sortBy"
+internal const val STATE_SORT_BY = "sortBy"
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
