@@ -1,33 +1,22 @@
 package com.example.diffutilrv.rvadapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.diffutilrv.model.Employee
+import com.example.diffutilrv.rvadapter.payload.CheckStateChange
+import com.example.diffutilrv.uimodel.EmployeeCheckbox
 
-class EmployeeDiffCallback(
-    private val oldEmployeeList: List<Employee>,
-    private val newEmployeeList: List<Employee>
-) : DiffUtil.Callback() {
-
-    override fun getOldListSize(): Int {
-        return oldEmployeeList.size
+class EmployeeDiffCallback : DiffUtil.ItemCallback<EmployeeCheckbox>() {
+    override fun areItemsTheSame(oldItem: EmployeeCheckbox, newItem: EmployeeCheckbox): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun getNewListSize(): Int {
-        return newEmployeeList.size
+    override fun areContentsTheSame(oldItem: EmployeeCheckbox, newItem: EmployeeCheckbox): Boolean {
+        return oldItem == newItem
     }
 
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldEmployeeList[oldItemPosition].id == newEmployeeList[newItemPosition].id
-    }
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldEmployee = oldEmployeeList[oldItemPosition]
-        val newEmployee = newEmployeeList[newItemPosition]
-        return oldEmployee.name == newEmployee.name
-    }
-
-    override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
-        // Implement method if you're going to use ItemAnimator
-        return super.getChangePayload(oldItemPosition, newItemPosition)
+    override fun getChangePayload(oldItem: EmployeeCheckbox, newItem: EmployeeCheckbox): Any? {
+        if (oldItem.employee == newItem.employee && oldItem.isChecked != newItem.isChecked) {
+            return CheckStateChange(newItem.isChecked)
+        }
+        return null
     }
 }

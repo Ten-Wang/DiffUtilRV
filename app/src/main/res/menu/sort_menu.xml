@@ -2,10 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/sort_by_role"
+        android:title="@string/sort_by_role"/>
+
+    <item
         android:id="@+id/sort_by_name"
         android:title="@string/sort_by_name"/>
 
     <item
-        android:id="@+id/sort_by_role"
-        android:title="@string/sort_by_role"/>
+        android:id="@+id/sort_by_cost"
+        android:title="@string/sort_by_cost"/>
 </menu>

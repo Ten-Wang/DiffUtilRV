@@ -3,5 +3,6 @@ package com.example.diffutilrv.model
 data class Employee(
     val id: Int,
     val name: String,
-    val role: String
+    val role: String,
+    val cost: Int
 )
