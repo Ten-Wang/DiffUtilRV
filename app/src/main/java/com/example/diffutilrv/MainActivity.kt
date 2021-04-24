@@ -3,21 +3,29 @@ package com.example.diffutilrv
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.diffutilrv.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var binding: ActivityMainBinding
     private lateinit var recyclerViewAdapter: EmployeeRecyclerViewAdapter
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        recyclerViewAdapter = EmployeeRecyclerViewAdapter(DummyEmployeeDataUtils.getEmployeeListSortedByRole())
-        recyclerView = findViewById(R.id.recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = recyclerViewAdapter
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        recyclerViewAdapter = EmployeeRecyclerViewAdapter(this)
+        with(binding.recyclerView) {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = recyclerViewAdapter
+        }
+        viewModel.employees.observe(this) { recyclerViewAdapter.submitList(it) }
+        if (viewModel.employees.value.orEmpty().isEmpty()) {
+            viewModel.loadData()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -27,11 +35,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.sort_by_name -> {
-            recyclerViewAdapter.updateEmployeeListItems(DummyEmployeeDataUtils.getEmployeeListSortedByName())
+            viewModel.changeSorting(EmployeeSortBy.NAME)
             true
         }
         R.id.sort_by_role -> {
-            recyclerViewAdapter.updateEmployeeListItems(DummyEmployeeDataUtils.getEmployeeListSortedByRole())
+            viewModel.changeSorting(EmployeeSortBy.ROLE)
             true
         }
         else -> super.onOptionsItemSelected(item)

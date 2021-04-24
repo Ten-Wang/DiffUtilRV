@@ -1,50 +1,35 @@
 package com.example.diffutilrv
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
+import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.diffutilrv.databinding.ListItemBinding
 
-class EmployeeRecyclerViewAdapter(employeeList: List<Employee>?) :
-    RecyclerView.Adapter<EmployeeRecyclerViewAdapter.ViewHolder>() {
-    private val mEmployees: MutableList<Employee> = ArrayList()
+class EmployeeRecyclerViewAdapter(
+    private val lifecycleOwner: LifecycleOwner,
+) : ListAdapter<Employee, EmployeeRecyclerViewAdapter.ViewHolder>(EmployeeDiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.list_item, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(
+            binding = ListItemBinding.inflate(inflater, parent, false),
+            lifecycleOwner = lifecycleOwner,
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val (_, name, role) = mEmployees[position]
-        holder.name.text = name
-        holder.role.text = role
+        val employee = getItem(position)
+        holder.bind(employee)
     }
 
-    fun updateEmployeeListItems(employees: List<Employee>?) {
-        val diffCallback = EmployeeDiffCallback(mEmployees, employees)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        mEmployees.clear()
-        mEmployees.addAll(employees!!)
-        diffResult.dispatchUpdatesTo(this)
-    }
-
-    override fun getItemCount(): Int {
-        return mEmployees.size
-    }
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val role: TextView
-        val name: TextView
-
-        init {
-            name = itemView.findViewById<View>(R.id.employee_name) as TextView
-            role = itemView.findViewById<View>(R.id.employee_role) as TextView
+    class ViewHolder(
+        private val binding: ListItemBinding,
+        private val lifecycleOwner: LifecycleOwner,
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(employee: Employee) {
+            binding.lifecycleOwner = lifecycleOwner
+            binding.employee = employee
         }
-    }
-
-    init {
-        mEmployees.addAll(employeeList!!)
     }
 }
