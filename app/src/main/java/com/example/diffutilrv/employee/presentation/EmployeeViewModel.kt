@@ -11,10 +11,20 @@ class EmployeeViewModel : ViewModel() {
     val list: LiveData<List<EmployeeListItem>> = _list
 
     fun sortByName() {
-        _list.value = DummyEmployeeDataUtils.employeeListSortedByName.map { it.toListItem() }
+        _list.value = DummyEmployeeDataUtils.employeeListSortedByName
+            .map { it.toListItem(::showName, ::showRole) }
     }
 
     fun sortByRole() {
-        _list.value = DummyEmployeeDataUtils.employeeListSortedByRole.map { it.toListItem() }
+        _list.value = DummyEmployeeDataUtils.employeeListSortedByRole
+            .map { it.toListItem(::showName, ::showRole) }
+    }
+
+    private fun showName(name: String) {
+        //do something
+    }
+
+    private fun showRole(role: String) {
+        //do something
     }
 }

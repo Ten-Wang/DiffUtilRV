@@ -16,6 +16,7 @@
             android:id="@+id/employee_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> item.showNameDetail()}"
             android:padding="10dp"
             android:text="@{item.name}"
             android:textSize="18sp" />
@@ -24,6 +25,7 @@
             android:id="@+id/employee_role"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> item.showRoleDetail()}"
             android:padding="10dp"
             android:text="@{item.role}"
             android:textSize="18sp" />
