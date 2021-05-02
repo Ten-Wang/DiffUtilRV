@@ -32,7 +32,7 @@ class ViewHolder(
     private val checkbox: CheckBox = itemView.findViewById(R.id.employee_checkbox)
 
     private val checkboxListener = CompoundButton.OnCheckedChangeListener { _, isChecked ->
-        onCheckedChangeListener(adapterPosition, isChecked)
+        onCheckedChangeListener(bindingAdapterPosition, isChecked)
     }
 
     fun bind(employee: EmployeeCheckbox) {
