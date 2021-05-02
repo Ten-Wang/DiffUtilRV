@@ -31,6 +31,9 @@ open class Page {
      * could be null because a PageObject might not be tied with an Activity
      */
     var rule: ActivityScenarioRule<*>? = null
+
+    fun acquireRule(): ActivityScenarioRule<*> =
+        rule ?: throw IllegalStateException("Page: should set rule() before use")
 }
 
 fun <T : Page> T.rule(rule: ActivityScenarioRule<*>): T {
