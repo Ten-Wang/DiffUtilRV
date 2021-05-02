@@ -22,7 +22,7 @@ class MainPage : Page() {
 
     fun checkDefaultSorting(): MainPage {
         checkSortingInRecyclerView(
-            rule = rule!!,
+            rule = acquireRule(),
             recyclerViewId = R.id.recycler_view,
             itemTextViewId = R.id.employee_role, // default by role
             itemTransformation = { it.toString() })
@@ -32,7 +32,7 @@ class MainPage : Page() {
     fun clickSortByName(): MainPage {
         clickActionBarMenuWithText(R.string.sort_by_name)
         checkSortingInRecyclerView(
-            rule = rule!!,
+            rule = acquireRule(),
             recyclerViewId = R.id.recycler_view,
             itemTextViewId = R.id.employee_name,
             itemTransformation = { it.toString() })
@@ -42,7 +42,7 @@ class MainPage : Page() {
     fun clickSortByCost(): MainPage {
         clickActionBarMenuWithText(R.string.sort_by_cost)
         checkSortingInRecyclerView(
-            rule = rule!!,
+            rule = acquireRule(),
             recyclerViewId = R.id.recycler_view,
             itemTextViewId = R.id.employee_cost,
             itemTransformation = { it.toString().toInt() })
@@ -52,7 +52,7 @@ class MainPage : Page() {
     fun clickSortByRole(): MainPage {
         clickActionBarMenuWithText(R.string.sort_by_role)
         checkSortingInRecyclerView(
-            rule = rule!!,
+            rule = acquireRule(),
             recyclerViewId = R.id.recycler_view,
             itemTextViewId = R.id.employee_role,
             itemTransformation = { it.toString() })
