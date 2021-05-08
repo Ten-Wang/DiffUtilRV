@@ -1,7 +1,9 @@
-package com.example.diffutilrv;
+package com.example.diffutilrv.view;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
+
+import com.example.diffutilrv.model.Employee;
 
 import java.util.List;
 

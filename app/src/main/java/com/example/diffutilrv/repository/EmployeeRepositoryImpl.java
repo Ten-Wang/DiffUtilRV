@@ -1,12 +1,22 @@
-package com.example.diffutilrv;
+package com.example.diffutilrv.repository;
+
+import com.example.diffutilrv.model.Employee;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class DummyEmployeeDataUtils {
-    public static List<Employee> getEmployeeListSortedByName() {
+import javax.inject.Inject;
+
+public class EmployeeRepositoryImpl implements EmployeeRepository {
+
+    @Inject
+    public EmployeeRepositoryImpl() {
+    }
+
+    @Override
+    public List<Employee> getEmployeeListSortedByName() {
         final List<Employee> employeeList = getEmployeeList();
 
         Collections.sort(employeeList, new Comparator<Employee>() {
@@ -19,7 +29,8 @@ public class DummyEmployeeDataUtils {
         return employeeList;
     }
 
-    public static List<Employee> getEmployeeListSortedByRole() {
+    @Override
+    public List<Employee> getEmployeeListSortedByRole() {
         final List<Employee> employeeList = getEmployeeList();
 
         Collections.sort(employeeList, new Comparator<Employee>() {
@@ -31,7 +42,8 @@ public class DummyEmployeeDataUtils {
         return employeeList;
     }
 
-    private static List<Employee> getEmployeeList() {
+    @Override
+    public List<Employee> getEmployeeList() {
         final List<Employee> employees = new ArrayList<>();
 
         employees.add(new Employee(1, "Employee 1", "Developer"));
@@ -45,5 +57,4 @@ public class DummyEmployeeDataUtils {
         employees.add(new Employee(9, "Employee 9", "Sr. Developer"));
         return employees;
     }
-
 }
