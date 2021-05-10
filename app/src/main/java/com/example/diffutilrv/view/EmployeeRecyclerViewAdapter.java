@@ -11,19 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.diffutilrv.model.Employee;
 import com.example.diffutilrv.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeRecyclerViewAdapter extends
-                                         RecyclerView.Adapter<EmployeeRecyclerViewAdapter
-                                                 .ViewHolder> {
+public class EmployeeRecyclerViewAdapter extends RecyclerView.Adapter<EmployeeRecyclerViewAdapter.ViewHolder> {
 
-    private List<Employee> mEmployees = new ArrayList<>();
+    private final List<Employee> mEmployees = new ArrayList<>();
 
-    public EmployeeRecyclerViewAdapter(List<Employee> employeeList) {
-        this.mEmployees.addAll(employeeList);
+    public EmployeeRecyclerViewAdapter() {
     }
 
+    @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -59,8 +59,8 @@ public class EmployeeRecyclerViewAdapter extends
 
         public ViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.employee_name);
-            role = (TextView) itemView.findViewById(R.id.employee_role);
+            name = itemView.findViewById(R.id.employee_name);
+            role = itemView.findViewById(R.id.employee_role);
         }
     }
 }

@@ -6,31 +6,42 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.diffutilrv.R;
+import com.example.diffutilrv.databinding.ActivityMainBinding;
+import com.example.diffutilrv.veiwmodel.EmployeeSortType;
 import com.example.diffutilrv.veiwmodel.MainViewModel;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
-
-    private RecyclerView mRecyclerView;
-    private EmployeeRecyclerViewAdapter mRecyclerViewAdapter;
+    private ActivityMainBinding mBinding;
     private MainViewModel mViewModel;
+
+    private EmployeeRecyclerViewAdapter mRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        this.mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         this.mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mRecyclerViewAdapter = new EmployeeRecyclerViewAdapter(this.mViewModel.getEmployeeListSortedByRole());
-        mRecyclerView = findViewById(R.id.recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mRecyclerViewAdapter);
+
+        initView();
+        initObserver();
+    }
+
+    private void initView() {
+        this.mRecyclerViewAdapter = new EmployeeRecyclerViewAdapter();
+        this.mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        this.mBinding.recyclerView.setAdapter(mRecyclerViewAdapter);
+    }
+
+    private void initObserver() {
+        mViewModel.getEmployeeListLiveData().observe(this, employeeList -> mRecyclerViewAdapter.updateEmployeeListItems(employeeList));
     }
 
     @Override
@@ -44,10 +55,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sort_by_name:
-                mRecyclerViewAdapter.updateEmployeeListItems(this.mViewModel.getEmployeeListSortedByName());
+                mViewModel.upDataSortType(EmployeeSortType.NAME);
                 return true;
             case R.id.sort_by_role:
-                mRecyclerViewAdapter.updateEmployeeListItems(this.mViewModel.getEmployeeListSortedByRole());
+                mViewModel.upDataSortType(EmployeeSortType.ROLE);
                 return true;
         }
 
