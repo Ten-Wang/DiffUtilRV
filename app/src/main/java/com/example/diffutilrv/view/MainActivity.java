@@ -15,6 +15,8 @@ import com.example.diffutilrv.databinding.ActivityMainBinding;
 import com.example.diffutilrv.veiwmodel.EmployeeSortType;
 import com.example.diffutilrv.veiwmodel.MainViewModel;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
@@ -22,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mBinding;
     private MainViewModel mViewModel;
 
-    private EmployeeRecyclerViewAdapter mRecyclerViewAdapter;
+    @Inject
+    public EmployeeRecyclerViewAdapter mRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        this.mRecyclerViewAdapter = new EmployeeRecyclerViewAdapter();
         this.mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.mBinding.recyclerView.setAdapter(mRecyclerViewAdapter);
     }

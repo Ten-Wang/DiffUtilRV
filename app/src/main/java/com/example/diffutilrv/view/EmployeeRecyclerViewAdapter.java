@@ -16,10 +16,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class EmployeeRecyclerViewAdapter extends RecyclerView.Adapter<EmployeeRecyclerViewAdapter.ViewHolder> {
 
     private final List<Employee> mEmployees = new ArrayList<>();
 
+    @Inject
     public EmployeeRecyclerViewAdapter() {
     }
 
