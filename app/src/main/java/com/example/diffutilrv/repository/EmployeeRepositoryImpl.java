@@ -4,7 +4,6 @@ import com.example.diffutilrv.model.Employee;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,12 +18,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     public List<Employee> getEmployeeListSortedByName() {
         final List<Employee> employeeList = getEmployeeList();
 
-        Collections.sort(employeeList, new Comparator<Employee>() {
-            @Override
-            public int compare(Employee a1, Employee a2) {
-                return a1.getName().compareTo(a2.getName());
-            }
-        });
+        Collections.sort(employeeList, (employee1, employee2) -> employee1.getName().compareTo(employee2.getName()));
 
         return employeeList;
     }
@@ -33,12 +27,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     public List<Employee> getEmployeeListSortedByRole() {
         final List<Employee> employeeList = getEmployeeList();
 
-        Collections.sort(employeeList, new Comparator<Employee>() {
-            @Override
-            public int compare(Employee a1, Employee a2) {
-                return a2.getRole().compareTo(a1.getRole());
-            }
-        });
+        Collections.sort(employeeList, (employee1, employee2) -> employee2.getRole().compareTo(employee1.getRole()));
         return employeeList;
     }
 
