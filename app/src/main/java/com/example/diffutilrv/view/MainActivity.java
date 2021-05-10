@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initObserver() {
-        mViewModel.getEmployeeListLiveData().observe(this, employeeList -> mRecyclerViewAdapter.updateEmployeeListItems(employeeList));
+        mViewModel.getEmployeeListLiveData().observe(this, employeeList -> mRecyclerViewAdapter.submitList(employeeList));
     }
 
     @Override

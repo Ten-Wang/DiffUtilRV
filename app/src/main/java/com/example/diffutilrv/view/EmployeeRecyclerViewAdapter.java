@@ -5,26 +5,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.diffutilrv.model.Employee;
 import com.example.diffutilrv.R;
+import com.example.diffutilrv.model.Employee;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
-public class EmployeeRecyclerViewAdapter extends RecyclerView.Adapter<EmployeeRecyclerViewAdapter.ViewHolder> {
-
-    private final List<Employee> mEmployees = new ArrayList<>();
+public class EmployeeRecyclerViewAdapter extends ListAdapter<Employee, EmployeeRecyclerViewAdapter.ViewHolder> {
 
     @Inject
-    public EmployeeRecyclerViewAdapter() {
+    protected EmployeeRecyclerViewAdapter(DiffUtil.ItemCallback<Employee> diffCallback) {
+        super(diffCallback);
     }
+
 
     @NotNull
     @Override
@@ -35,25 +34,12 @@ public class EmployeeRecyclerViewAdapter extends RecyclerView.Adapter<EmployeeRe
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        final Employee employee = mEmployees.get(position);
+    public void onBindViewHolder(@NonNull EmployeeRecyclerViewAdapter.ViewHolder holder, int position) {
+        final Employee employee = getItem(position);
         holder.name.setText(employee.getName());
         holder.role.setText(employee.getRole());
     }
 
-    public void updateEmployeeListItems(List<Employee> employees) {
-        final EmployeeDiffCallback diffCallback = new EmployeeDiffCallback(this.mEmployees, employees);
-        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
-
-        this.mEmployees.clear();
-        this.mEmployees.addAll(employees);
-        diffResult.dispatchUpdatesTo(this);
-    }
-
-    @Override
-    public int getItemCount() {
-        return mEmployees.size();
-    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
