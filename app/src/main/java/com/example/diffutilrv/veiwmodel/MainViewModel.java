@@ -38,7 +38,7 @@ public class MainViewModel extends ViewModel {
         return mEmployeeListLiveData;
     }
 
-    public void upDataSortType(EmployeeSortType employeeSortType) {
+    public void updateSortType(EmployeeSortType employeeSortType) {
         this.mEmployeeSortTypeLiveData.postValue(employeeSortType);
     }
 }

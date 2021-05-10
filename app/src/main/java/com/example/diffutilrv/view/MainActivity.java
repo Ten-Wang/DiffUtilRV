@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -21,16 +20,15 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
-    private ActivityMainBinding mBinding;
+    @Inject
+    public ActivityMainBinding mBinding;
     private MainViewModel mViewModel;
-
     @Inject
     public EmployeeRecyclerViewAdapter mRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         this.mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         initView();
@@ -57,10 +55,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sort_by_name:
-                mViewModel.upDataSortType(EmployeeSortType.NAME);
+                mViewModel.updateSortType(EmployeeSortType.NAME);
                 return true;
             case R.id.sort_by_role:
-                mViewModel.upDataSortType(EmployeeSortType.ROLE);
+                mViewModel.updateSortType(EmployeeSortType.ROLE);
                 return true;
         }
 
