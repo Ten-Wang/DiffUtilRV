@@ -142,8 +142,6 @@ class EmployeeUseCase {
 
 android的做法跟原本差不多，ViewModel可以直接呼叫到EmployeeUseCase來做使用．
 
-這邊應該要使用注入但是KMM的注入有點麻煩...
-
 ``` kotlin
 class MainViewModel : ViewModel() {
     ．．．
