@@ -138,7 +138,11 @@ class EmployeeUseCase {
 }
 ```
 
-android的做法就像這樣，ViewModel可以直接呼叫到EmployeeUseCase，這邊應該要使用注入但是KMM的注入有點麻煩...
+有了共用的商業邏輯部分後，接下來就是各平台自己實作畫面呈現了．
+
+android的做法跟原本差不多，ViewModel可以直接呼叫到EmployeeUseCase來做使用．
+
+這邊應該要使用注入但是KMM的注入有點麻煩...
 
 ``` kotlin
 class MainViewModel : ViewModel() {
@@ -171,11 +175,11 @@ class MainActivity : AppCompatActivity() {
 
 ```
 
-而iOS的部分 我直接讓畫面呈現了 在iOS的近似MVVM架構下 應該要使用到ViewController來管理資料
-
-(要來不及拉！)
+而iOS的部分 
 
 可以看到同樣可以直接呼叫到EmployeeUseCase來獲得資料
+
+(我直接讓畫面呈現了 在iOS的近MVVM架構下 應該要使用到ViewController來管理資料)
 
 ``` swift
 ···
@@ -203,7 +207,11 @@ struct ContentView: View {
   ···
 ```
 
+
+
 這樣就完成了一個簡單的KMM專案．
 
-能完成KMM版本真的要感謝GDG的兩位導師的KMM研習，真的收益良多．如果大家有興趣可以多多參加．
+能完成KMM版本真的要感謝GDG的兩位導師 聖佑與阿達 所開辦的KMM Ｗorkshop，收益良多．
+
+如果想要更進一步的話下次GDG開類似活動的話可以多多報名參加．
 
