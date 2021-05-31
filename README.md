@@ -50,9 +50,7 @@
 
 但是基本上就是跟這個Presenter綁定了，View需要知道Presenter，而Presenter也需要知道
 
-View．互相依賴的結果就是Presenter常常不能復用，每個View都有一個Presenter
-
-這時Presenter也常常長成龐然大物....
+View．在畫面邏輯複雜的時候，Presenter因為過度依賴View而復用性很低，導致Presenter肥大
 
 
 
