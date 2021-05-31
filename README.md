@@ -1,4 +1,11 @@
 # DiffUtilRV
+
+看了看大家寫的，好像很少人寫java版本的．為了那些跟我一樣平常只跟java版本打交道的夥伴，我就來寫java的版本吧！
+
+話雖如此，我還是憑藉著google寫了一個Kotlin的版本，趕在期限的最後一天寫完了，放在最下面"更多"的部分．
+
+不管怎樣，讓我們先老調重彈，從MVC/MVP/MVVM開始吧．
+
 ## MVC,MVP,MVVM
 
 用一個生活上的例子來代表 : 
@@ -85,4 +92,9 @@ ViewModel同樣是一個代理人的身份，與Presenter不同的地方在於�
 
 #### LiveData 與MutableLiveData
 
-## 更進一步
+## 更多
+![image](https://github.com/officeyuli/DiffUtilRV/blob/b8d470a7065fafe72cd803bef1958a759712ffe5/KMMDemo.jpg)
+
+https://github.com/officeyuli/DiffUtilRVKMMVersion/
+![image](https://github.com/officeyuli/DiffUtilRV/blob/b8d470a7065fafe72cd803bef1958a759712ffe5/KMM-release-scheme_Blogpost.jpeg)
+
