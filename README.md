@@ -86,7 +86,9 @@ ViewModel同樣是一個代理人的身份，與Presenter不同的地方在於�
 
 ###### 單一職責
 
-當某個組件需要對很多層級負責時，就很容易膨脹的非常快，成為所謂的God Object，最後甚至變成沒有人可以理解他在做什麼用就對了的黑盒子狀態．在MVC中就很常發生這個問題．
+當某個組件需要對很多層級負責時，就很容易膨脹的非常快，成為所謂的God Object，最後甚至變成沒有人可以理解他在做什麼用就對了的黑盒子狀態．在MVC中就
+
+很常發生這個問題．
 
 在開始寫code之前，先問問自己，這行code是要做什麼的，它放在這邊對嘛？
 
@@ -104,9 +106,25 @@ ViewModel同樣是一個代理人的身份，與Presenter不同的地方在於�
 
 DataBinding:
 
+DataBinding可以協助進行View層與ViewModel的觀察與綁定，減少Activity內不必要的程式碼．不過我個人還是比較喜歡寫在activity內，在追code的時候
+
+只要看一個地方就好．DataBinding的另外一個好處是不會因為生命週期的問題出現npm的閃退，以前使用findViewById都要處理這個View找不到的情況，在使用
+
+DataBinding後就幾乎不會發剩這個問題了．
+
 ViewModel:
 
+負責管理商業邏輯與畫面溝通的部分，越簡單越好．越簡單就代表耦合性越低． 當一個ViewModel過大時，十之八九就是商業邏輯放在了ViewModel．
+
+在官方推出ViewModel之前的MVVM是非常難實作的，主要是由於Activity的生命週期不能掌控，所以造成很多自製的ViewModel仍然要遷就View的生命週期，
+
+在官方推出了ViewModel與lifecyclerObserver 之後，ViewModel終於可以與View解耦，在activity或是fragment重建後，可以繼承原本的ViewModel．
+
+感謝Google爸爸！
+
 UseCases:
+
+並不是MVVM必要的部分，
 
 Repo與RepoImpl:
 
