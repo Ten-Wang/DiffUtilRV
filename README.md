@@ -156,13 +156,24 @@ DataBinding後就幾乎不會發生這個問題了．
 
 在Hilt容易上手的前提下，極小成本可以帶來如此多好處．
 
-(注意：Hilt的編譯時間比Koin更久．如果你已經習慣使用koin的話不用特意更換，java只有dagger跟hilt可以選惹)
+(注意：Hilt的編譯時間比Koin更久．如果你已經習慣使用koin的話不用特意更換，只因Java只有Dagger跟Hilt可以選惹)
 
 #### Repository 與RepositoryImpl
+###### 如果要隔離Model與ViewModel 有Repo就夠了吧，為什麼要多一層呢？
 
+官方的做法的確只有一層的Repository，但是偶爾會發生資料來源替換的需要，比如說原本來源是api換成了Db的資料，或是要使用假的資料進行測試，甚至有些資料源在某些特地的地區不能使用．
 
+比如說Google地圖在大陸地區就不能使用．
+
+這時候只要替換掉RepositoryImpl的實體，Repository以上的部分都不需要修改．
 
 #### LiveData 與MutableLiveData
+###### 為什麼要特意把MutableLiveData換成LiveData傳出去呢？每次寫getter /setter都要特地改一次
+
+當MutableLive傳出去後，View層就有機會去修改裡面的數值，所以為了避免未來自己或是團隊成員一時糊塗，讓View做了不該做的行為，轉換成LiveData是有必要的．
+
+如果要修改其中的數值，請呼叫ViewModel來處理．
+
 
 ## 更多
 
