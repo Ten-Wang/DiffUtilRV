@@ -93,8 +93,117 @@ ViewModel同樣是一個代理人的身份，與Presenter不同的地方在於�
 #### LiveData 與MutableLiveData
 
 ## 更多
+
+"MVVM架構裡面，各層級的耦合性被盡量降低，讓View層去決定收到的資料如何去使用"
+
+那麼我們可以擴展這個View層的定義，從普通的Fragment/Activity 到...不同的平台上面？
+
+只要提供了足夠顯示在View上的資料，那不管是什麼平台，應該都能運用自己的畫面元件，繪製出其同樣的結果．
+
+Kotlin官方也有類似的想法，所以推出了Kotlin跨平台框架，Kotlin Multiplatform Mobile，簡稱KMM
+
+這次專案的KMM版本放在 https://github.com/officeyuli/DiffUtilRVKMMVersion/
+
+裡面主要使用Kotlin，在iOS的View呈現上則是使用了一點點的swift
+
+成果就像下面這樣
+
 ![image](https://github.com/officeyuli/DiffUtilRV/blob/b8d470a7065fafe72cd803bef1958a759712ffe5/KMMDemo.jpg)
 
-https://github.com/officeyuli/DiffUtilRVKMMVersion/
+左邊是iOS版本，右邊是Android版本．
+
+這件事怎麼達成的呢 可以從官方的圖看出些端倪
+
 ![image](https://github.com/officeyuli/DiffUtilRV/blob/b8d470a7065fafe72cd803bef1958a759712ffe5/KMM-release-scheme_Blogpost.jpeg)
+
+
+我們將畫面呈現交給各自平台去實作，專注於將商業邏輯以下的部分共用．
+
+舉例來說，在我的專案內有一個 shared的模組， 內部分別有androidMain/iosMain/commonMain
+
+而在commanMain之中，放著雙平台可以一起共用的商業邏輯．
+
+``` kotlin
+class EmployeeUseCase {
+
+    private val mEmployeeRepository: EmployeeRepository by lazy { EmployeeRepositoryImpl() }
+
+    fun getEmployeeListSortedByRole(): List<Employee> {
+        return mEmployeeRepository.employeeListSortedByRole()
+    }
+
+    fun getEmployeeListSortedByName(): List<Employee> {
+        return mEmployeeRepository.employeeListSortedByName()
+    }
+}
+```
+
+android的做法就像這樣，ViewModel可以直接呼叫到EmployeeUseCase，這邊應該要使用注入但是KMM的注入有點麻煩...
+
+``` kotlin
+class MainViewModel : ViewModel() {
+    ．．．
+    private val mEmployeeUseCase :EmployeeUseCase by lazy { EmployeeUseCase() }
+
+    fun getUsersWithNameLiveData(): LiveData<List<Employee>> {
+        return Transformations.map(mEmployeeSortTypeLiveData) { employeeSortType: EmployeeSortType ->
+            when (employeeSortType) {
+                EmployeeSortType.ROLE -> mEmployeeUseCase.getEmployeeListSortedByRole()
+                EmployeeSortType.NAME -> mEmployeeUseCase.getEmployeeListSortedByName()
+            }
+        }
+    }
+  ．．．
+
+}
+```
+
+呈現到畫面上跟原本差不多
+
+``` kotlin
+class MainActivity : AppCompatActivity() {
+   ．．．
+   mainViewModel.getUsersWithNameLiveData().observe(this, {
+            adapter.submitList(it)
+        })
+   ．．．
+}
+
+```
+
+而iOS的部分 我直接讓畫面呈現了 在iOS的近似MVVM架構下 應該要使用到ViewController來管理資料
+
+(要來不及拉！)
+
+可以看到同樣可以直接呼叫到EmployeeUseCase來獲得資料
+
+``` swift
+···
+struct ContentView: View {
+    let employee : Array<Employee> = EmployeeUseCase().getEmployeeListSortedByRole()
+    var body: some View {
+        Spacer()
+        ForEach(employee.indices) { index in
+                    VStack{
+                        Spacer()
+                        HStack{
+                            Text((employee[index].name ?? "").isEmpty ? "" : employee[index].name!)
+                            Spacer()
+                            Text(employee[index].role)
+                            Spacer()
+                        }
+                        Spacer()
+                    }
+
+                }
+        Spacer()
+    
+    }
+}
+  ···
+```
+
+這樣就完成了一個簡單的KMM專案．
+
+能完成KMM版本真的要感謝GDG的兩位導師的KMM研習，真的收益良多．如果大家有興趣可以多多參加．
 
