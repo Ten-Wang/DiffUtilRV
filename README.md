@@ -98,21 +98,21 @@ ViewModel同樣是一個代理人的身份，與Presenter不同的地方在於�
 
 另外就是由於MVVM的設計，不會知道外面是怎麼使用自己，所以如果提供過多的資料，就容易被誤用．因此，下層的組件應該只提供最少的可行的資訊量給上層．
 
-在開始寫code之前，先問問自己，我有必要要知道這個嘛？不知道這個我可以動嘛？
+在開始寫code之前，先問問自己，我有必要要知道這個嘛？不知道這個我可以正常使用嘛？
 
 
 ## 實作
 基本上都是使用官方的推薦庫．
 
-DataBinding:
+###### DataBinding:
 
 DataBinding可以協助進行View層與ViewModel的觀察與綁定，減少Activity內不必要的程式碼．不過我個人還是比較喜歡寫在activity內，在追code的時候
 
 只要看一個地方就好．DataBinding的另外一個好處是不會因為生命週期的問題出現npm的閃退，以前使用findViewById都要處理這個View找不到的情況，在使用
 
-DataBinding後就幾乎不會發剩這個問題了．
+DataBinding後就幾乎不會發生這個問題了．
 
-ViewModel:
+###### ViewModel:
 
 負責管理商業邏輯與畫面溝通的部分，越簡單越好．越簡單就代表耦合性越低． 當一個ViewModel過大時，十之八九就是商業邏輯放在了ViewModel．
 
@@ -122,17 +122,21 @@ ViewModel:
 
 感謝Google爸爸！
 
-UseCases:
+###### UseCases:
 
-並不是MVVM必要的部分，
+處理商業邏輯的地方．並不是MVVM必要的部分，但在大型專案內仍然推薦抽出這層．對於測試也比較方便．
 
-Repo與RepoImpl:
+在這層開始應該盡量脫離Android的任何import，只有pure code．商業邏輯一般不會因為平台不同而出現不同結果．
 
-基本上都是使用官方的推薦庫．
+###### Repo與RepoImpl:
+
+資料層，Repo同樣也不是MVVM必要的部分，但官方文件裡面仍然推薦抽出這層，有Repo作為中介，可以避免ViewModel直接接觸到Model層．來減少ViewModel知道
+
+不需要知道的東西，對於ViewModel來說資料來自於Socket或是Pulling都無關緊要，只要能用就好．Repo層可以很好的協助做到這點．
 
 ## 細節
 #### 依賴注入
-為什麼要用依賴注入
+為什麼要用依賴注入？
 
 #### Repository 與RepositoryImpl
 
