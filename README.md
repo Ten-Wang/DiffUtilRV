@@ -50,8 +50,7 @@
 
 但是基本上就是跟這個Presenter綁定了，View需要知道Presenter，而Presenter也需要知道
 
-View．在畫面邏輯複雜的時候，Presenter因為過度依賴View而復用性很低，導致Presenter肥大
-
+View．在畫面邏輯新增或修改的時候，需要同時改寫View和Presenter兩方，大幅增加工作量 
 
 
 
