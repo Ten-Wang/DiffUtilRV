@@ -190,7 +190,7 @@ Kotlin官方也有類似的想法，所以推出了Kotlin跨平台框架，Kotli
 
 ![image](https://github.com/officeyuli/DiffUtilRV/blob/b8d470a7065fafe72cd803bef1958a759712ffe5/KMMDemo.jpg)
 
-左邊是iOS版本，右邊是Android版本．
+###### 左邊是iOS版本，右邊是Android版本．
 
 這件事怎麼達成的呢 可以從官方的圖看出些端倪
 
@@ -240,7 +240,7 @@ class MainViewModel : ViewModel() {
 }
 ```
 
-呈現到畫面上跟原本差不多
+呈現到畫面上的做法沒有不同
 
 ``` kotlin
 class MainActivity : AppCompatActivity() {
